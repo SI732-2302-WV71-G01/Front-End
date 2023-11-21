@@ -38,6 +38,13 @@
         </div>
     </div>
 
+    <div v-if="articles.length === 0 && this.storeGlobal.goingToMyArticles === 'false'" class="flex justify-content-center align-items-center h-30rem min-w-screen">
+        <div class="flex flex-column justify-content-center h-20rem w-20rem p-3 shadow-1">
+            <h2 class="inline-flex justify-content-center">
+                No hay artículos escritos por la comunidad aún</h2>
+        </div>
+    </div>
+
     <pv-button v-if="storeGlobal.goingToMyArticles === 'true'"
                label="New Article" icon="pi pi-plus" class="p-button-success mr-2" @click="openNew()"/>
 
@@ -113,7 +120,7 @@ export default {
 
             });
         }
-        else{ //Going to "Stores"
+        else{
             if(this.storeGlobal.user === null || this.storeGlobal.user.roleId === 1){// Inexpert User
                 this.articleService.getAll().then((response) => {
                     this.articles = response.data;
@@ -175,7 +182,7 @@ export default {
         },
         goToArticle(article){
             localStorage.setItem('Article', JSON.stringify(article));
-            this.storeGlobal.store = JSON.parse(localStorage.getItem('Article'));
+            this.storeGlobal.article = JSON.parse(localStorage.getItem('Article'));
             this.$router.push('/articles/article');
             console.log(this.storeGlobal.store.name);
         }
