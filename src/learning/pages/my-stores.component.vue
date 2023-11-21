@@ -33,6 +33,7 @@
                          :src="getImageUrl(slotProps.data.encoded64LogoImage)" width="100" height="100" alt="Image Description">
                 </template>
             </pv-column>
+            <!--EDIT OR DELETE ICONS-->
             <pv-column v-if="this.storeGlobal.goingToMyStores === 'true'" :exportable="false" style="min-width: 8rem">
                 <template #body="slotProps">
                     <pv-button icon="pi pi-pencil" class="p-button-text p-button-rounded" @click="this.store = {...slotProps.data} ; storeDialog = true; selectedStores = [];"/>
@@ -246,7 +247,7 @@ export default {
         goToStore(store){
             localStorage.setItem('Store', JSON.stringify(store));
             this.storeGlobal.store = JSON.parse(localStorage.getItem('Store'));
-            //this.storeGlobal.store = store;
+
             this.$router.push('/stores/store');
             console.log(this.storeGlobal.store.name);
         },
@@ -267,7 +268,7 @@ export default {
                 const selectedFiles2 = fileUpload2.files;
 
                 if(!this.store.id){ //CREATE
-                    console.log("Enter2");
+
 
                     //FILE UPLOAD OF STORES' LOGO
                     const file = selectedFiles1[0];
@@ -277,8 +278,10 @@ export default {
                         this.base64Logo = reader.result.split(",")[1];
                         this.store.Encoded64LogoImage = this.base64Logo;
                         this.store.UserId = this.storeGlobal.user.id;
+                        this.store.avgRating = 0;
                         this.storeService.add(this.store).then((response) => {
                             this.stores.push(response.data);
+                            console.log('avgRating', response.data.avgRating)
                             this.store = {};
                             this.storeDialog = false;
                             //Actualizar el $store.StoreId mediante el response**
@@ -315,6 +318,7 @@ export default {
                         saveStoreResource.description = this.store.description;
                         saveStoreResource.address = this.store.address;
                         saveStoreResource.userId = this.store.userId;
+                        saveStoreResource.avgRating = this.store.avgRating;
 
                         const file = selectedFiles1[0];
                         const reader = new FileReader();

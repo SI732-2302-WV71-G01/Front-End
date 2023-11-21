@@ -92,7 +92,7 @@ export default {
 
                     console.log("despues de pushear a home")
                     console.log(this.storeGlobal.user)
-                    //Eliminating the products from the stores of the user that logged in
+                    //Eliminating the products in cart from the stores of the user that logged in
                     this.storeService.getAllByUserId(response.data.id).then((response) => {
                         response.data.forEach(
                             (s) => {this.productService.getAllByStoreId(s.id).then((response3)=>{

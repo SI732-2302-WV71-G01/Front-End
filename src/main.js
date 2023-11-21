@@ -34,6 +34,7 @@ import Paginator from "primevue/paginator";
 import Divider from "primevue/divider";
 import DataView from "primevue/dataview";
 import Rating from "primevue/rating";
+import SelectButton from 'primevue/selectbutton';
 
 const app = createApp(App)
 
@@ -66,4 +67,5 @@ app.component("pv-paginator", Paginator);
 app.component("pv-divider", Divider);
 app.component("pv-data-view", DataView);
 app.component("pv-rating", Rating);
+app.component("pv-selected-button", SelectButton);
 app.mount('#app')
